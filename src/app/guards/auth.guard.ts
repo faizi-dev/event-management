@@ -20,13 +20,14 @@ export class AuthGuard implements CanActivate  {
     state: RouterStateSnapshot
   ): Promise<boolean> {
     return new Promise((resolve) => {
-      this.http.get(this.apiUrl+'/api/protected',  { withCredentials: true }).subscribe({
-        next: () => resolve(true), // User is authenticated
-        error: () => {
-          this.router.navigate(['/login']); // Redirect to login page
-          resolve(false);
-        },
-      });
+      // this.http.get(this.apiUrl+'/api/protected',  { withCredentials: true }).subscribe({
+      //   next: () => resolve(true), // User is authenticated
+      //   error: () => {
+      //     this.router.navigate(['/login']); // Redirect to login page
+      //     resolve(false);
+      //   },
+      // });
+      resolve(true)
     });
   }
 
