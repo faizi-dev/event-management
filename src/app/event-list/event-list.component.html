@@ -1,0 +1,83 @@
+<div class="event-container">
+  <h1>Event List</h1>
+
+  <button class="btn btn-danger" (click)="logout()" >Logout</button>
+
+  <!-- Add Event Button -->
+  <div class="add-event-container">
+    <button class="btn btn-primary" *ngIf="!showAddEventForm" (click)="toggleAddEventForm()">Add Event</button>
+  </div>
+
+  <!-- Add Event Form -->
+  <div *ngIf="showAddEventForm" class="form-container">
+    <h2>Add New Event</h2>
+    <form (ngSubmit)="addEvent()" class="form">
+      <input [(ngModel)]="newEvent['title']" name="title" placeholder="Title" required />
+      <input [(ngModel)]="newEvent['date']" name="date" type="date" required />
+      <input [(ngModel)]="newEvent['location']" name="location" placeholder="Location" required />
+      <textarea [(ngModel)]="newEvent['description']" name="description" placeholder="Description"></textarea>
+      <input [(ngModel)]="newEvent['category']" name="category" placeholder="Category" required />
+      <button class="btn btn-primary" type="submit">Save Event</button>
+      <button class="btn btn-primary" type="button" (click)="cancelAddEvent()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Filters -->
+  <div *ngIf="!showAddEventForm" class="filter-container">
+    <h2>Filter Events</h2>
+    <label>Category:</label>
+    <input [(ngModel)]="filters['category']" placeholder="Category" class="small-input" />
+    <label>Date:</label>
+    <input [(ngModel)]="filters['date']" type="date" class="small-input" />
+    <button class="btn btn-secondary" (click)="applyFilters()">Filter</button>
+    <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
+  </div>
+
+  <!-- Event List Table -->
+  <table *ngIf="!showAddEventForm" class="event-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of filteredEvents">
+        <td *ngIf="editingEvent?.id !== event['id']"
+        [appHoverDetail]="'Date: ' + event.date + ', Location: ' + event.location + ', Category: ' + event.category"
+        >
+          {{ event['title'] }}
+        </td>
+        <td *ngIf="editingEvent?.id === event['id']">
+          <input [(ngModel)]="editingEvent['title']" name="editTitle" required />
+        </td>
+        <td *ngIf="editingEvent?.id !== event['id']">{{ event['date']  }}</td>
+        <td *ngIf="editingEvent?.id === event['id']">
+          <input [(ngModel)]="editingEvent['date']" name="editDate" type="date" required />
+        </td>
+        <td *ngIf="editingEvent?.id !== event['id']">{{ event['location'] }}</td>
+        <td *ngIf="editingEvent?.id === event['id']">
+          <input [(ngModel)]="editingEvent['location']" name="editLocation" required />
+        </td>
+        <td *ngIf="editingEvent?.id !== event['id']">{{ event['description'] }}</td>
+        <td *ngIf="editingEvent?.id === event['id']">
+          <textarea [(ngModel)]="editingEvent['description']" name="editDescription"></textarea>
+        </td>
+        <td *ngIf="editingEvent?.id !== event['id']">{{ event['category'] | formatCategory  }}</td>
+        <td *ngIf="editingEvent?.id === event['id']">
+          <input [(ngModel)]="editingEvent['category']" name="editCategory" required />
+        </td>
+        <td>
+          <button class="btn btn-primary" *ngIf="editingEvent?.id !== event['id']" (click)="editEvent(event)" style="margin-bottom: 5px;">Edit</button>
+          <button class="btn btn-primary" *ngIf="editingEvent?.id === event['id']" (click)="updateEvent()" style="margin-bottom: 5px;">Save</button>
+          <button class="btn btn-primary"*ngIf="editingEvent?.id === event['id']" (click)="cancelEdit()">Cancel</button>
+          <button class="btn btn-danger" *ngIf="editingEvent?.id !== event['id']" (click)="deleteEvent(event['id'])">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
