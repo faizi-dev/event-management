@@ -1,0 +1,15 @@
+.dashboard-container {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.chart-card {
+  margin-bottom: 20px;
+}
+
+.mat-card-content {
+  padding: 20px;
+  height: 300px;
+}

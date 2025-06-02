@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Events by Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <canvas baseChart
+        [data]="eventsByCategory"
+        [type]="'pie'">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Events by Month</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <canvas baseChart
+        [data]="eventsByMonth"
+        [type]="'bar'">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
+</div>
